@@ -1,0 +1,6 @@
+{
+    "sound":[
+        {"device1output":"DEVICE 1 NAME", "device1input":"DEVICE 1 NAME"},
+        {"device2output":"DEVICE 2 NAME", "device2input":"DEVICE 2 NAME"}
+    ]
+}
