@@ -1,10 +1,34 @@
 from pynput import keyboard
+import pystray
+import PIL.Image
+import webbrowser
 import subprocess
-import sys
+import os
 import json
 
 shift = False
 micToggle = True
+
+# System tray
+image = PIL.Image.open('icon.png')
+
+def on_clicked(icon, item):
+    match str(item):
+        case "Exit":
+            icon.stop()
+            os._exit(1)
+        case "About":
+            webbrowser.open_new_tab("https://github.com/Precious13ui/FTD-Keybinds")
+
+icon = pystray.Icon("FTD-Keybinds", image, menu=pystray.Menu(
+    pystray.MenuItem("About", on_clicked),
+    pystray.MenuItem("Exit", on_clicked)
+))
+
+icon.run_detached()
+
+def get_icon():
+    return icon
 
 # Json config
 with open('config.json') as user_file:
@@ -65,7 +89,8 @@ def on_press(key):
                 subprocess.run('SoundVolumeView /Unmute "DefaultCaptureDevice"', shell=True)
                 set_micToggle(True)
         elif k == get_keys()[0]['close']:
-            sys.exit()
+            get_icon().stop()
+            os._exit(1)
 
         # Programes :D
         for p in get_program():

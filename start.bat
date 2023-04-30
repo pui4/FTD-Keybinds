@@ -1,1 +1,3 @@
-%cd%/venv/Scripts/python.exe main.py
+@echo off
+START %cd%/venv/Scripts/pythonw.exe main.pyw
+exit
