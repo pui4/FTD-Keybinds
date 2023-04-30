@@ -1,6 +1,17 @@
 {
+    "keybinds":[
+        {
+            "device1":"f1",
+            "device2":"f2",
+            "globalmute":"f3",
+            "close":"f12"
+        }
+    ],
+    "programes":[
+        {"keybind":"f4", "path":"C:\\Program Files\\Mozilla Firefox\\firefox.exe"}
+    ],
     "sound":[
-        {"device1output":"DEVICE 1 NAME", "device1input":"DEVICE 1 NAME"},
-        {"device2output":"DEVICE 2 NAME", "device2input":"DEVICE 2 NAME"}
+        {"device1output":"Razer", "device1input":"Razer Mic"},
+        {"device2output":"Samson", "device2input":"Fifine"}
     ]
 }

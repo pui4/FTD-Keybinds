@@ -12,9 +12,17 @@ with open('config.json') as user_file:
 
 parsed_json = json.loads(file_contents)
 sound = parsed_json['sound']
+keys = parsed_json['keybinds']
+program = parsed_json['programes']
 
 def get_sound():
     return sound
+
+def get_keys():
+    return keys
+
+def get_program():
+    return program
 
 subprocess.run('SoundVolumeView /Unmute "Capture"', shell=True)
 
@@ -39,26 +47,30 @@ def on_press(key):
         k = key.name  # other keys
     if k == 'shift':
         set_shift(True)
-    if k in ['f1', 'f2', 'f3', 'f12']:  # keys of interest
-        if get_shift() == True:
-            match k:
-                case 'f1':
-                    subprocess.run('nircmd setdefaultsounddevice "' + get_sound()[0]['device1output'] + '" 1', shell=True)
-                    subprocess.run('nircmd setdefaultsounddevice "' + get_sound()[0]['device1input'] + '" 1', shell=True)
-                    subprocess.run('nircmd setdefaultsounddevice "' + get_sound()[0]['device1input'] + '" 2', shell=True)
-                case 'f2':
-                    subprocess.run('nircmd setdefaultsounddevice "' + get_sound()[1]['device2output'] + '" 1', shell=True)
-                    subprocess.run('nircmd setdefaultsounddevice "' + get_sound()[1]['device2input'] + '" 1', shell=True)
-                    subprocess.run('nircmd setdefaultsounddevice "' + get_sound()[1]['device2input'] + '" 2', shell=True)
-                case 'f3':
-                    if get_micToggle() == True:
-                        subprocess.run('SoundVolumeView /Mute "DefaultCaptureDevice"', shell=True)
-                        set_micToggle(False)
-                    else:
-                        subprocess.run('SoundVolumeView /Unmute "DefaultCaptureDevice"', shell=True)
-                        set_micToggle(True)
-                case 'f12':
-                    sys.exit()
+    if get_shift() == True:
+        # Wanted to use match here but python is retarded
+        if k == get_keys()[0]['device1']:
+            subprocess.run('nircmd setdefaultsounddevice "' + get_sound()[0]['device1output'] + '" 1', shell=True)
+            subprocess.run('nircmd setdefaultsounddevice "' + get_sound()[0]['device1input'] + '" 1', shell=True)
+            subprocess.run('nircmd setdefaultsounddevice "' + get_sound()[0]['device1input'] + '" 2', shell=True)
+        elif k == get_keys()[0]['device2']:
+            subprocess.run('nircmd setdefaultsounddevice "' + get_sound()[1]['device2output'] + '" 1', shell=True)
+            subprocess.run('nircmd setdefaultsounddevice "' + get_sound()[1]['device2input'] + '" 1', shell=True)
+            subprocess.run('nircmd setdefaultsounddevice "' + get_sound()[1]['device2input'] + '" 2', shell=True)
+        elif k == get_keys()[0]["globalmute"]:
+            if get_micToggle() == True:
+                subprocess.run('SoundVolumeView /Mute "DefaultCaptureDevice"', shell=True)
+                set_micToggle(False)
+            else:
+                subprocess.run('SoundVolumeView /Unmute "DefaultCaptureDevice"', shell=True)
+                set_micToggle(True)
+        elif k == get_keys()[0]['close']:
+            sys.exit()
+
+        # Programes :D
+        for p in get_program():
+            if k == p["keybind"]:
+                subprocess.call(p["path"])
 
 def on_release(key):
     try:
