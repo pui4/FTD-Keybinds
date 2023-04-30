@@ -8,10 +8,10 @@
         }
     ],
     "programes":[
-        {"keybind":"f4", "path":"C:\\Program Files\\Mozilla Firefox\\firefox.exe"}
+        {"keybind":"f4", "path":"PATH WITH \\ TO PROGRAME"}
     ],
     "sound":[
-        {"device1output":"Razer", "device1input":"Razer Mic"},
-        {"device2output":"Samson", "device2input":"Fifine"}
+        {"device1output":"DEVICE 1 NAME", "device1input":"DEVICE 1 NAME"},
+        {"device2output":"DEVICE 2 NAME", "device2input":"DEVICE 2 NAME"}
     ]
 }
